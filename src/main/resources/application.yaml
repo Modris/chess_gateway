@@ -1,0 +1,47 @@
+
+server:
+  netty:
+    idle-timeout: 15s
+    connection-timeout: 2s
+  shutdown: graceful
+  port: '8888'
+
+
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://keycloak:8080/realms/chess_manager_client
+        registration:
+          keycloak:
+            client-secret: ${KEYCLOAK_CLIENT_SECRET}
+            client-id: chess_manager
+            scope: openid
+            
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - SaveSession
+      routes:
+      - id: ui
+        uri: ${SPA_URL:http://localhost:9090} # SPA_URL env variable or defaults to localhost
+        predicates:
+            - Path=/, /favicon.ico, /assets/**, /*.webp, /assets/*
+        filters: 
+        - TokenRelay=
+        
+      - id: manager
+        uri: ${MANAGER_URL:http://localhost:8181}
+        predicates: 
+            - Path=/websocket, /app/websocket, /topic/*
+  application:
+    name: manager-service
+  lifecycle:
+    timeout-per-shutdown-phase: 15s
+
+
+
+
