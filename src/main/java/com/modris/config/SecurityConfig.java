@@ -45,7 +45,8 @@ public class SecurityConfig {
 	    return http
 	            .authorizeExchange(exchange -> exchange
 	                    .pathMatchers("/", "/*.css", "/*.js", "/favicon.ico", "/assets/**", "/*.webp", 
-	                    		"/assets/*", "/websocket", "/app/websocket", "/topic/*").permitAll()
+	                    		"/assets/*", "/websocket", "/app/websocket", "/topic/*",
+	                    		"/history","/history/page/*", "/game","/game/*","/get/game/*").permitAll()
 	                   .anyExchange().authenticated())
 	            .exceptionHandling(exceptionHandling ->
 	                    exceptionHandling.authenticationEntryPoint(
