@@ -37,7 +37,7 @@ public class SecurityConfig {
 	  issues. With 202 status code and Keycloak logout link in Location header the frontend will simply call 
 	  the Location logout link.
 	 4) We Serve CSRF Tokens in a Cookie.
-	 5) We have to subscribe to the CSRF token with csrfWebFilter. This is a known issue in github.
+	 5) We have to explicitly subscribe to the CSRF token with csrfWebFilter. This is a known issue in github.
 	 */
 	@Bean
 	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http,

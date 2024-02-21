@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim-buster as build
+FROM eclipse-temurin:17-jdk-jammy as build
 WORKDIR /workspace/app
 
 COPY mvnw .
@@ -11,7 +11,7 @@ RUN sed -i 's/\r$//' mvnw
 RUN ./mvnw install -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-FROM openjdk:17-jdk-slim-buster
+FROM eclipse-temurin:17-jdk-jammy
 VOLUME /tmp
 ARG DEPENDENCY=/workspace/app/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib

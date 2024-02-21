@@ -40,6 +40,10 @@ spring:
             - Path=/websocket, /app/websocket, /topic/*, /save, /getGameHistory, /statistics, /get/game/*
         filters: 
         - TokenRelay= # convert session cookie to Authorization header with Bearer Token 
+     
+ 
+      
+   
   application:
     name: manager-service
   lifecycle:
