@@ -1,5 +1,9 @@
 # Chess_Gateway. A Puzzle piece for SlyChess project.
 
+<div align="center">
+  <img src="/project_images/chess_gateway_highlight.png" alt="test">
+</div>
+
 * Backend-For-Frontend Pattern (BFF). More info below.
   
 * Reverse Proxy for serving Chess_Frontend and Chess_Manager.
@@ -34,12 +38,15 @@ and all further requests to protected endpoints will be with this session cookie
 </div>
 
 # BFF key points 
+
 * The server has to act as a reverse proxy to server the frontend. It protects endpoints with Spring Security.
 
-* We change Session to a Session Cookie and CSRF header to a CSRF Cookie before sending them to the frontend.
+* The Server will take care of Refresh Tokens for us. 
+
+* Change Session to a Session Cookie and CSRF header to a CSRF Cookie before sending them to the frontend. No JWT will be exposed in the fronted.
   
 * Since nowadays backend and frontend are seperate applications with their own build tools we have to change the configuration so the default 
-answer is 401 unauthenticated instead of 302 redirect to Authorization Server. The main reason for not using redirects with SPAs is that you would run into Cross-
+answer is 401 Unauthorized instead of 302 redirect to Authorization Server. The main reason for not using redirects with SPAs is that you would run into Cross-
 Origin Request Sharing (CORS) issues.
 
 * Logout is a bit more complex. In General you would call Spring Server POST /logout endpoint and be done. But since we are authenticated inside the Authorization Server
@@ -53,7 +60,7 @@ Origin Request Sharing (CORS) issues.
 
 * Chess_Manager is a Resource Server and it has some protected endpoints. In application.yaml we need to convert the Session Cookie to an Authorization Header with Bearer Token. We can do this with a filter called TokenRelay.
 
-* We Solve frontend CORS issues by serving the frontend from Chess_Gateway port. We Solve frontend CORS issues by not using 302 redirects (because of SPA) but by returning 401 unauthenticated for login. For logout we return 202 Status code with Location Header containing the URL which the frontend can follow with window.location.href.
+* We Solve frontend CORS issues by serving the frontend from Chess_Gateway port. We Solve frontend CORS issues by not using 302 redirects (because of SPA) but by returning 401 Unauthorized for login. For logout we return 202 Status code with Location Header containing the URL which the frontend can follow with window.location.href.
 
  * @RestController method with @GetMapping("/user") which just returns the User username. It's a protected endpoint and requires the user to be authenticated. Otherwise we return 401.
 
