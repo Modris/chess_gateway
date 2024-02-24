@@ -13,6 +13,7 @@ target/
 .springBeans
 .sts4-cache
 
+*.txt.bak
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -31,3 +32,45 @@ build/
 
 ### VS Code ###
 .vscode/
+
+
+#notepad++ backup files.
+*.bak
+# Package files #
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+*.class
+
+# Eclipse specific files
+
+.settings/
+
+.classpath
+
+.project
+
+# Build output
+
+target/
+bin/
+out/
+build/
+build.xml
+
+# Log files
+
+*.log
+
+
+*.toml
+
+*.bak
+
+*.toml.bak
+
+*.env
+
